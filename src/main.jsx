@@ -7,7 +7,6 @@ function App() {
   const [form, setForm] = useState({ email: "", password: "", name: "" });
   const [mode, setMode] = useState("login");
 
-  // 🔹 Change this line to your Render backend URL
   const API_BASE = "https://timeclock-round2.onrender.com";
 
   async function call(path, method = "GET", body) {
@@ -54,4 +53,41 @@ function App() {
         <input
           placeholder="password"
           type="password"
-          onChange={(e) => setForm({ ...form, pass
+          onChange={(e) => setForm({ ...form, password: e.target.value })}
+        />
+        {mode === "register" && (
+          <input
+            placeholder="name"
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+          />
+        )}
+        <div style={{ marginTop: 10 }}>
+          {mode === "login" ? (
+            <button onClick={login}>Login</button>
+          ) : (
+            <button onClick={register}>Register</button>
+          )}
+          <button
+            style={{ marginLeft: 10 }}
+            onClick={() =>
+              setMode(mode === "login" ? "register" : "login")
+            }
+          >
+            Switch
+          </button>
+        </div>
+      </div>
+    );
+
+  return (
+    <div style={{ padding: 40 }}>
+      <h2>Employee Clock</h2>
+      <button onClick={clockIn}>Clock In</button>
+      <button onClick={clockOut}>Clock Out</button>
+      <button onClick={refresh}>Refresh</button>
+      <pre>{JSON.stringify(shifts, null, 2)}</pre>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
